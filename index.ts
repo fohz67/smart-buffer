@@ -22,7 +22,7 @@ function main(): void {
     buffer.setOffset(0);
 
     console.log("Read String:", buffer.readString());
-    console.log("Read Int8:", buffer.readUInt8());
+    console.log("Read Int8:", buffer.readInt8());
     console.log("Read String:", buffer.readString());
     console.log("Read Int16:", buffer.readInt16(true));
     console.log("Read UInt16:", buffer.readUInt16(true));

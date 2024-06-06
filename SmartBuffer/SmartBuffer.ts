@@ -52,11 +52,21 @@ export class SmartBuffer {
     }
 
     readInt8(offset?: number | null): number {
-        return ReadUtils.readInt8(this.view, offset ?? this.offset++);
+        const result: number = ReadUtils.readInt8(this.view, offset ?? this.offset++);
+
+        if (offset === null) {
+            this.offset += 1;
+        }
+        return result;
     }
 
     readUInt8(offset?: number | null): number {
-        return ReadUtils.readUInt8(this.view, offset ?? this.offset++);
+        const result: number = ReadUtils.readUInt8(this.view, offset ?? this.offset);
+
+        if (offset === null) {
+            this.offset += 1;
+        }
+        return result;
     }
 
     readInt16(littleEndian: boolean = true, offset?: number | null): number {
