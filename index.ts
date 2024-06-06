@@ -10,25 +10,25 @@ import SmartBuffer from './SmartBuffer/SmartBuffer';
 function main(): void {
     const buffer: SmartBuffer = new SmartBuffer();
 
-    buffer.writeString("Hello");
-    buffer.writeInt8(42);
-    buffer.writeString("Buffer Test");
-    buffer.writeInt16(12345, true);
-    buffer.writeUInt16(54321, true);
-    buffer.writeInt32(123456789, true);
-    buffer.writeUInt32(987654321, true);
-    buffer.writeStringNT("End");
+    buffer.writeString("Hello", null);
+    buffer.writeInt8(42, null);
+    buffer.writeString("Buffer Test", null);
+    buffer.writeInt16(12345, true, null);
+    buffer.writeUInt16(54321, true, null);
+    buffer.writeInt32(123456789, true, null);
+    buffer.writeUInt32(987654321, true, null);
+    buffer.writeStringNT("End", null);
 
     buffer.setOffset(0);
 
-    console.log("Read String:", buffer.readString());
-    console.log("Read Int8:", buffer.readInt8());
-    console.log("Read String:", buffer.readString());
-    console.log("Read Int16:", buffer.readInt16(true));
-    console.log("Read UInt16:", buffer.readUInt16(true));
-    console.log("Read Int32:", buffer.readInt32(true));
-    console.log("Read UInt32:", buffer.readUInt32(true));
-    console.log("Read String NT:", buffer.readStringNT());
+    console.log("Read String:", buffer.readString(null));
+    console.log("Read Int8:", buffer.readInt8(null));
+    console.log("Read String:", buffer.readString(null));
+    console.log("Read Int16:", buffer.readInt16(true, null));
+    console.log("Read UInt16:", buffer.readUInt16(true, null));
+    console.log("Read Int32:", buffer.readInt32(true, null));
+    console.log("Read UInt32:", buffer.readUInt32(true, null));
+    console.log("Read String NT:", buffer.readStringNT(null));
 }
 
 main();
