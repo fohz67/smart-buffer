@@ -53,7 +53,7 @@ export class SmartBuffer {
     }
 
     readInt8(offset?: number | null): number {
-        const result: number = ReadUtils.readInt8(this.view, offset ?? this.offset++);
+        const result: number = ReadUtils.readInt8(this.view, offset ?? this.offset);
 
         if (offset === null || offset === undefined) {
             this.offset += 1;
