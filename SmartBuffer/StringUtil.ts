@@ -14,7 +14,6 @@ export const StringUtil: any = {
         let position: number = offset ?? buffer.getOffset();
         let result: string = '';
 
-
         while (position < length) {
             const charCode: number = ReadUtils.readUInt8(buffer.getView(), position);
 
