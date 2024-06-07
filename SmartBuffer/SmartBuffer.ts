@@ -44,25 +44,36 @@ export class SmartBuffer {
 
         if (requiredSize > this.view.byteLength) {
             const newBuffer: ArrayBuffer = new ArrayBuffer(requiredSize);
-            const newArray: Uint8Array = new Uint8Array(this.view.buffer);
+            const oldArray: Uint8Array = new Uint8Array(this.view.buffer);
+            const newArray: Uint8Array = new Uint8Array(newBuffer);
 
-            new Uint8Array(newBuffer).set(newArray);
+            newArray.set(oldArray);
             this.view = new DataView(newBuffer);
         }
     }
 
     readInt8(offset?: number | null): number {
-        return ReadUtils.readInt8(this.view, offset ?? this.offset++);
+        const result: number = ReadUtils.readInt8(this.view, offset ?? this.offset++);
+
+        if (offset === null || offset === undefined) {
+            this.offset += 1;
+        }
+        return result;
     }
 
     readUInt8(offset?: number | null): number {
-        return ReadUtils.readUInt8(this.view, offset ?? this.offset++);
+        const result: number = ReadUtils.readUInt8(this.view, offset ?? this.offset);
+
+        if (offset === null || offset === undefined) {
+            this.offset += 1;
+        }
+        return result;
     }
 
     readInt16(littleEndian: boolean = true, offset?: number | null): number {
         const result: number = ReadUtils.readInt16(this.view, offset ?? this.offset, littleEndian);
 
-        if (offset === null) {
+        if (offset === null || offset === undefined) {
             this.offset += 2;
         }
         return result;
@@ -71,7 +82,7 @@ export class SmartBuffer {
     readUInt16(littleEndian: boolean = true, offset?: number | null): number {
         const result: number = ReadUtils.readUInt16(this.view, offset ?? this.offset, littleEndian);
 
-        if (offset === null) {
+        if (offset === null || offset === undefined) {
             this.offset += 2;
         }
         return result;
@@ -80,7 +91,7 @@ export class SmartBuffer {
     readInt32(littleEndian: boolean = true, offset?: number | null): number {
         const result: number = ReadUtils.readInt32(this.view, offset ?? this.offset, littleEndian);
 
-        if (offset === null) {
+        if (offset === null || offset === undefined) {
             this.offset += 4;
         }
         return result;
@@ -89,7 +100,7 @@ export class SmartBuffer {
     readUInt32(littleEndian: boolean = true, offset?: number | null): number {
         const result: number = ReadUtils.readUInt32(this.view, offset ?? this.offset, littleEndian);
 
-        if (offset === null) {
+        if (offset === null || offset === undefined) {
             this.offset += 4;
         }
         return result;
@@ -116,13 +127,15 @@ export class SmartBuffer {
     writeInt16(value: number, littleEndian: boolean = true, offset?: number | null): void {
         this.ensureCapacity(2);
         WriteUtils.writeInt16(this.view, offset ?? this.offset, value, littleEndian);
-        if (offset === null) this.offset += 2;
+        if (offset === null || offset === undefined) {
+            this.offset += 2;
+        }
     }
 
     writeUInt16(value: number, littleEndian: boolean = true, offset?: number | null): void {
         this.ensureCapacity(2);
         WriteUtils.writeUInt16(this.view, offset ?? this.offset, value, littleEndian);
-        if (offset === null) {
+        if (offset === null || offset === undefined) {
             this.offset += 2;
         }
     }
@@ -130,7 +143,7 @@ export class SmartBuffer {
     writeInt32(value: number, littleEndian: boolean = true, offset?: number | null): void {
         this.ensureCapacity(4);
         WriteUtils.writeInt32(this.view, offset ?? this.offset, value, littleEndian);
-        if (offset === null) {
+        if (offset === null || offset === undefined) {
             this.offset += 4;
         }
     }
@@ -138,7 +151,7 @@ export class SmartBuffer {
     writeUInt32(value: number, littleEndian: boolean = true, offset?: number | null): void {
         this.ensureCapacity(4);
         WriteUtils.writeUInt32(this.view, offset ?? this.offset, value, littleEndian);
-        if (offset === null) {
+        if (offset === null || offset === undefined) {
             this.offset += 4;
         }
     }
