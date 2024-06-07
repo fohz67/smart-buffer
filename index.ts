@@ -21,14 +21,14 @@ function main(): void {
 
     buffer.setOffset(0);
 
-    console.log("Read String:", buffer.readString());
+    console.log("Read String:", buffer.readString(5));
     console.log("Read Int8:", buffer.readUInt8());
-    console.log("Read String:", buffer.readString());
+    console.log("Read String:", buffer.readString(11));
     console.log("Read Int16:", buffer.readInt16(true));
     console.log("Read UInt16:", buffer.readUInt16(true));
     console.log("Read Int32:", buffer.readInt32(true));
     console.log("Read UInt32:", buffer.readUInt32(true));
-    console.log("Read String NT:", buffer.readStringNT());
+    console.log("Read String NT:", buffer.readStringNT(3));
 }
 
 main();

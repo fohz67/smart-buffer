@@ -95,12 +95,12 @@ export class SmartBuffer {
         return result;
     }
 
-    readString(offset?: number | null): string {
-        return StringUtil.readString(this, offset, false);
+    readString(length: number, offset?: number | null): string {
+        return StringUtil.readString(this, length, offset, false);
     }
 
-    readStringNT(offset?: number | null): string {
-        return StringUtil.readString(this, offset, true);
+    readStringNT(length: number, offset?: number | null): string {
+        return StringUtil.readString(this, length, offset, true);
     }
 
     writeInt8(value: number, offset?: number | null): void {

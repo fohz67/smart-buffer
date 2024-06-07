@@ -9,12 +9,12 @@ import {SmartBuffer} from './SmartBuffer';
 import {ReadUtils, WriteUtils} from './utils';
 
 export const StringUtil: any = {
-    readString: (buffer: SmartBuffer, offset?: number | null, isNt: boolean = false): string => {
-        const length: number = buffer.getLength();
+    readString: (buffer: SmartBuffer, length: number, offset?: number | null, isNt: boolean = false): string => {
         let position: number = offset ?? buffer.getOffset();
+        const endPosition: number = position + length;
         let result: string = '';
 
-        while (position < length) {
+        while (position < endPosition) {
             const charCode: number = ReadUtils.readUInt8(buffer.getView(), position);
 
             position++;
@@ -36,7 +36,6 @@ export const StringUtil: any = {
 
         for (let i: number = 0; i < length; i++) {
             let charCode: number = value.charCodeAt(i);
-
             WriteUtils.writeUInt8(buffer.getView(), position + i, charCode);
         }
         if (isNt) {
