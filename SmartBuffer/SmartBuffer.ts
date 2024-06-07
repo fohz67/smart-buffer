@@ -12,10 +12,13 @@ export class SmartBuffer {
     private view: DataView;
     private offset: number;
 
-    constructor(initialSize: number = DEFAULT_SIZE) {
-        const arrayBuffer: ArrayBuffer = new ArrayBuffer(initialSize);
-
-        this.view = new DataView(arrayBuffer);
+    constructor(data: ArrayBuffer | number = DEFAULT_SIZE) {
+        if (data instanceof ArrayBuffer) {
+            this.view = new DataView(data);
+        } else {
+            const arrayBuffer: ArrayBuffer = new ArrayBuffer(data);
+            this.view = new DataView(arrayBuffer);
+        }
         this.offset = 0;
     }
 
@@ -25,6 +28,11 @@ export class SmartBuffer {
 
     getView(): DataView {
         return this.view;
+    }
+
+    setView(newView: DataView): void {
+        this.view = newView;
+        this.offset = 0;
     }
 
     getOffset(): number {
