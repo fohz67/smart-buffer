@@ -22,6 +22,10 @@ export class SmartBuffer {
         return new SmartBuffer(size);
     }
 
+    static fromBuffer(buffer: ArrayBuffer): SmartBuffer {
+        return new SmartBuffer(buffer);
+    }
+
     getView(): DataView {
         return this.view;
     }
