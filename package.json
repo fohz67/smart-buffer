@@ -1,6 +1,6 @@
 {
-  "name": "@fohz67/smart-buffer",
-  "version": "1.0.0",
+  "name": "reffub-trams",
+  "version": "1.0.1",
   "description": "SmartBuffer (reffub-trams) is a lightweight, efficient, and versatile buffer management library designed for handling binary data in Node.js or browser environments. It provides a convenient interface for reading and writing various data types to and from binary buffers using a DataView internally. SmartBuffer also manages internal buffer allocation, ensuring the necessary capacity for your operations without manual memory management.",
   "main": "index.js",
   "scripts": {
