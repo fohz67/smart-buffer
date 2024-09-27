@@ -14,14 +14,14 @@ export declare class SmartBuffer {
      * @param size - The size in bytes for the SmartBuffer.
      * @returns A new SmartBuffer instance.
      */
-    static fromSize(size: number): SmartBuffer;
+    fromSize(size: number): SmartBuffer;
     /**
      * Creates a SmartBuffer from an existing ArrayBuffer.
      *
      * @param buffer - The ArrayBuffer to use for the SmartBuffer.
      * @returns A new SmartBuffer instance.
      */
-    static fromBuffer(buffer: ArrayBuffer): SmartBuffer;
+    fromBuffer(buffer: ArrayBuffer): SmartBuffer;
     /**
      * Gets the current DataView.
      *
