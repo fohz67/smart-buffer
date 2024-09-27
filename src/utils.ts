@@ -2,8 +2,8 @@ import {ReadUtilsType, WriteUtilsType} from "./types";
 
 export const DEFAULT_SIZE: number = 8;
 
-export function isNull(that: any): boolean {
-    return that === null || that === undefined
+export function isNull(value: any): boolean {
+    return value === null || value === undefined;
 }
 
 export const ReadUtils: ReadUtilsType = {
@@ -16,7 +16,6 @@ export const ReadUtils: ReadUtilsType = {
     readFloat32: (view: DataView, offset: number, littleEndian: boolean = true): number => view.getFloat32(offset, littleEndian),
     readFloat64: (view: DataView, offset: number, littleEndian: boolean = true): number => view.getFloat64(offset, littleEndian),
 };
-
 
 export const WriteUtils: WriteUtilsType = {
     writeInt8: (view: DataView, offset: number, value: number): void => view.setInt8(offset, value),
