@@ -1,4 +1,3 @@
-import {StringUtil} from "./StringUtil";
 import {Offset} from "./types";
 import {DEFAULT_SIZE, isNull, ReadUtils, WriteUtils} from "./utils";
 
@@ -33,6 +32,15 @@ export class SmartBuffer {
      */
     fromBuffer(buffer: ArrayBuffer): SmartBuffer {
         return new SmartBuffer(buffer);
+    }
+
+    /**
+     * Gets the current ArrayBuffer.
+     *
+     * @returns The current ArrayBuffer created by the SmartBuffer.
+     */
+    getBuffer(): ArrayBuffer {
+        return this.view.buffer;
     }
 
     /**
@@ -91,7 +99,7 @@ export class SmartBuffer {
         const requiredSize: number = this.offset + size;
         if (requiredSize > this.view.byteLength) {
             const newBuffer: ArrayBuffer = new ArrayBuffer(requiredSize);
-            new Uint8Array(newBuffer).set(new Uint8Array(this.view.buffer));
+            new Uint8Array(newBuffer).set(new Uint8Array(this.view.buffer, 0, this.view.byteLength));
             this.view = new DataView(newBuffer);
         }
     }
@@ -221,7 +229,19 @@ export class SmartBuffer {
      * @returns The string read from the buffer.
      */
     readString(offset?: Offset): string {
-        return StringUtil.readString(this, offset, false);
+        const length: number = this.getLength();
+        let bufferOffset: number = offset ?? this.offset;
+        let result: string = '';
+        while (bufferOffset < length) {
+            const charCode: number = ReadUtils.readUInt8(this.view, bufferOffset);
+            if (charCode === 0) break;
+            result += String.fromCharCode(charCode);
+            bufferOffset++;
+        }
+        if (isNull(offset)) {
+            this.offset = bufferOffset;
+        }
+        return result;
     }
 
     /**
@@ -231,7 +251,7 @@ export class SmartBuffer {
      * @returns The null-terminated string read from the buffer.
      */
     readStringNT(offset?: Offset): string {
-        return StringUtil.readString(this, offset, true);
+        return this.readString(offset);
     }
 
     /**
@@ -354,7 +374,13 @@ export class SmartBuffer {
      */
     writeString(value: string, offset?: Offset): void {
         this.ensureCapacity(value.length);
-        StringUtil.writeString(this, value, offset, false);
+        let bufferOffset: number = offset ?? this.offset;
+        for (let i: number = 0; i < value.length; i++) {
+            WriteUtils.writeUInt8(this.view, bufferOffset++, value.charCodeAt(i));
+        }
+        if (isNull(offset)) {
+            this.offset = bufferOffset;
+        }
     }
 
     /**
@@ -365,7 +391,14 @@ export class SmartBuffer {
      */
     writeStringNT(value: string, offset?: Offset): void {
         this.ensureCapacity(value.length + 1);
-        StringUtil.writeString(this, value, offset, true);
+        let bufferOffset: number = offset ?? this.offset;
+        for (let i: number = 0; i < value.length; i++) {
+            WriteUtils.writeUInt8(this.view, bufferOffset++, value.charCodeAt(i));
+        }
+        WriteUtils.writeUInt8(this.view, bufferOffset++, 0);
+        if (isNull(offset)) {
+            this.offset = bufferOffset;
+        }
     }
 }
 
